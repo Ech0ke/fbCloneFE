@@ -1,10 +1,17 @@
 import Image from "next/image";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { FiThumbsUp } from "react-icons/fi";
 import { FaRegCommentAlt } from "react-icons/fa";
 import { RiShareForwardLine } from "react-icons/ri";
 
 function Post() {
+  const [formattedDate, setFormattedDate] = useState<string>("");
+
+  useEffect(() => {
+    const date: Date = new Date();
+    setFormattedDate(date.toLocaleString());
+  }, []);
+
   return (
     <div className="flex flex-col">
       <div className="bg-white mt-6 rounded-md p-4">
@@ -18,9 +25,7 @@ function Post() {
           />
           <div>
             <p className="font-medium">Aidas Žygas</p>
-            <p className="text-xs text-gray-500">
-              {new Date().toLocaleString()}
-            </p>
+            <p className="text-xs text-gray-500">{formattedDate}</p>
           </div>
         </div>
         <p className="py-4">
@@ -41,7 +46,7 @@ function Post() {
           src="https://images.pexels.com/photos/16952091/pexels-photo-16952091/free-photo-of-wood-landscape-field-summer.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
           layout="fill"
           objectFit="cover"
-          alt=""
+          alt="Post image"
         />
       </div>
       {/* Footer */}

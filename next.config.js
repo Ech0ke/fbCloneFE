@@ -6,6 +6,10 @@ const nextConfig = {
       "static.xx.fbcdn.net",
       "platform-lookaside.fbsbx.com",
       "images.pexels.com",
+      "www.wilsoncenter.org",
+      "caricom.org",
+      "images.healthshots.com",
+      "data:image",
     ],
   },
 };

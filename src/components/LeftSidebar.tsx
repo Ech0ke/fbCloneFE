@@ -12,7 +12,7 @@ import { BsStopwatch } from "react-icons/bs";
 import ProfilePicture from "./ProfilePicture";
 import Username from "./Username";
 
-function Sidebar() {
+function LeftSidebar() {
   return (
     <div className="hidden lg:inline-flex flex-col py-2 pl-2 max-w-xl lg:min-w-[302px]">
       <div className="flex items-center space-x-2 py-3 pl-4 hover:bg-gray-200 rounded-l-xl cursor-pointer">
@@ -32,4 +32,4 @@ function Sidebar() {
   );
 }
 
-export default Sidebar;
+export default LeftSidebar;

@@ -13,5 +13,4 @@ export const authOptions: NextAuthOptions = {
   ],
   secret: process.env.NEXTAUTH_SECRET,
 };
-export default (req: NextApiRequest, res: NextApiResponse) =>
-  NextAuth(req, res, authOptions);
+export default NextAuth(authOptions);
