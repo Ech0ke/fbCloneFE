@@ -6,8 +6,13 @@ import { HiOutlineVideoCamera } from "react-icons/hi";
 import { IoMdPhotos } from "react-icons/io";
 import { BsEmojiSmile } from "react-icons/bs";
 import { RiDeleteBin6Line } from "react-icons/ri";
+import { useSession } from "next-auth/react";
+import axios from "axios";
+import apiUrls from "@/api/ApiUrls";
 
 function CreatePost() {
+  const { data: session } = useSession();
+
   const username: string = Username({});
 
   const [imageToPost, setImageToPost] = useState<string | null>(null);
@@ -15,7 +20,7 @@ function CreatePost() {
   const inputRef = useRef<HTMLInputElement | null>(null);
   const hiddenFileInput = useRef<HTMLInputElement | null>(null);
 
-  const handleFileUploadClick = () => {
+  const handleFileUploadClick = (): void => {
     if (hiddenFileInput.current) {
       hiddenFileInput.current.click();
     }
@@ -33,9 +38,38 @@ function CreatePost() {
     }
   };
 
-  const removeImage = () => {
+  const removeImage = (): void => {
     setImageToPost(null);
   };
+
+  const handleSubmit = (e: React.MouseEvent<HTMLElement>) => {
+    e.preventDefault();
+    if (!inputRef?.current?.value) return;
+    const formData = new FormData();
+    const postData: object = {
+      file: imageToPost,
+      post: inputRef.current.value,
+      user: session?.user?.name,
+      email: session?.user?.email,
+      profilePic: session?.user?.image,
+    };
+
+    Object.entries(postData).forEach(([key, value]) => {
+      if (value) {
+        formData.append(key, value);
+      }
+    });
+    axios
+      .post(apiUrls.FACEBOOK_CLONE_ENDPOINT, formData, {
+        headers: { Accept: "application/json" },
+      })
+      .then((response) => {
+        inputRef.current!.value = "";
+        removeImage();
+      })
+      .catch((error) => console.error(error));
+  };
+
   return (
     <div className="bg-white rounded-md shadow-md text-gray-500 p-2">
       <div className="flex p-4 space-x-2 items-center">
@@ -47,7 +81,7 @@ function CreatePost() {
             placeholder={`What's on your mind, ${username}?`}
             ref={inputRef}
           />
-          <button hidden></button>
+          <button hidden onClick={handleSubmit}></button>
         </form>
       </div>
       {imageToPost && (
