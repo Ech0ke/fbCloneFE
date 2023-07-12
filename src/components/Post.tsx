@@ -45,6 +45,7 @@ function Post() {
         <Image
           src="https://images.pexels.com/photos/16952091/pexels-photo-16952091/free-photo-of-wood-landscape-field-summer.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
           layout="fill"
+          className="object-cover"
           objectFit="cover"
           alt="Post image"
         />

@@ -9,6 +9,8 @@ import { RiDeleteBin6Line } from "react-icons/ri";
 import { useSession } from "next-auth/react";
 import axios from "axios";
 import apiUrls from "@/api/ApiUrls";
+import { useDispatch } from "react-redux";
+import { addPost } from "../../public/src/features/postSlice";
 
 function CreatePost() {
   const { data: session } = useSession();
@@ -19,6 +21,8 @@ function CreatePost() {
 
   const inputRef = useRef<HTMLInputElement | null>(null);
   const hiddenFileInput = useRef<HTMLInputElement | null>(null);
+
+  const dispatch = useDispatch();
 
   const handleFileUploadClick = (): void => {
     if (hiddenFileInput.current) {
@@ -65,6 +69,7 @@ function CreatePost() {
       })
       .then((response) => {
         inputRef.current!.value = "";
+        dispatch(addPost(response.data));
         removeImage();
       })
       .catch((error) => console.error(error));
