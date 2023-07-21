@@ -31,14 +31,13 @@ function CreatePost() {
   };
 
   const addImageToPost = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const reader = new FileReader();
     if (e.target.files) {
       const selectedFile = e.target.files[0];
-      reader.readAsDataURL(selectedFile);
+      const reader = new FileReader();
       reader.onload = (e) => {
-        setImageToPost(e.target?.result as string);
+        setImageToPost(reader.result as string);
       };
-      console.log(selectedFile);
+      reader.readAsDataURL(new Blob([selectedFile]));
     }
   };
 
